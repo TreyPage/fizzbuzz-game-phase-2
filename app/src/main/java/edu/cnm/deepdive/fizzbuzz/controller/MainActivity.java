@@ -283,15 +283,15 @@ public class MainActivity extends AppCompatActivity
       if (speed >= SPEED_THRESHOLD && ellipticalDistance >= 1) {
         if (Math.abs(deltaY) * containerWidth <= Math.abs(deltaX) * containerHeight) {
           if (deltaX > 0) {
-            Log.d("Trace", "Buzz fling");
+            recordRound(Category.BUZZ);
           } else {
-            Log.d("Trace", "Fuzz fling");
+            recordRound(Category.FIZZ);
           }
         } else {
           if (deltaY > 0) {
-            Log.d("Trace", "Neither fling");
+            recordRound(Category.NEITHER);
           } else {
-            Log.d("Trace", "FizzBuzz fling");
+            recordRound(Category.FIZZBUZZ);
           }
         }
         updateValue();
