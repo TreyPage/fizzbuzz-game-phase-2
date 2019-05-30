@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.fizzbuzz;
+package edu.cnm.deepdive.fizzbuzz.controller;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,13 +15,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.preference.PreferenceManager;
+import edu.cnm.deepdive.fizzbuzz.R;
+import edu.cnm.deepdive.fizzbuzz.model.Game;
+import edu.cnm.deepdive.fizzbuzz.model.Round;
+import edu.cnm.deepdive.fizzbuzz.model.Round.Category;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Main game play screen for FizzBuzz number classification game.
- * <p>When the game is running, this class displays a randomly selected number; the user then
+ * Main Game play screen for FizzBuzz number classification Game.
+ * <p>When the Game is running, this class displays a randomly selected number; the user then
  * flings the number in one of 4 directions, to indicate whether the number is a Fizz (divisible by
  * 3), Buzz (divisible by 5), FizzBuzz (divisible by both 3 & 5), or neither Fizz nor Buzz. A record
  * of numbers displayed, user actions, as well as an overall correct/incorrect tally are kept.</p>
@@ -38,13 +42,14 @@ public class MainActivity extends AppCompatActivity
   private GestureDetectorCompat detector;
   private Timer timer;
   private SharedPreferences preferences;
+  private Game game;
 
   /**
    * Initializes this activity when created, and when restored after {@link #onDestroy()} (for
-   * example, after a change of orientation). In the latter case, the game state is retrieved from
+   * example, after a change of orientation). In the latter case, the Game state is retrieved from
    * <code>savedInstanceState</code>.
    *
-   * @param savedInstanceState saved game state {@link Bundle}.
+   * @param savedInstanceState saved Game state {@link Bundle}.
    */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +61,16 @@ public class MainActivity extends AppCompatActivity
     valueContainer.setOnTouchListener(this);
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
     preferences.registerOnSharedPreferenceChangeListener(this);
-    // TODO Restore any necessary fields, set game state, etc.
+    // TODO Restore any necessary fields, set Game state, etc.
   }
 
   /**
-   * Updates timer(s) and UI to return display &amp; game to the pre-{@link #onPause()} state.
+   * Updates timer(s) and UI to return display &amp; Game to the pre-{@link #onPause()} state.
    */
   @Override
   protected void onResume() {
     super.onResume();
-    // TODO Resume game if running.
+    // TODO Resume Game if running.
   }
 
   /**
@@ -79,9 +84,9 @@ public class MainActivity extends AppCompatActivity
   }
 
   /**
-   * Writes critical game state information to <code>outState</code>.
+   * Writes critical Game state information to <code>outState</code>.
    *
-   * @param outState game state write target.
+   * @param outState Game state write target.
    */
   @Override
   protected void onSaveInstanceState(Bundle outState) {
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   /**
-   * Inflates menu options for control of game, access to settings, and display of current game
+   * Inflates menu options for control of Game, access to settings, and display of current Game
    * results.
    *
    * @param menu {@link Menu} to which inflated options are added.
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   /**
-   * Updates visible and enabled state of menu options, depending on game state.
+   * Updates visible and enabled state of menu options, depending on Game state.
    *
    * @param menu options menu.
    * @return flag indicating that the options menu should be re-rendered (always <code>true</code>
@@ -172,7 +177,7 @@ public class MainActivity extends AppCompatActivity
 
   /**
    * Detects and handles changes in any {@link SharedPreferences} values in which this app's
-   * configuration settings are stored. Most such changes are handled by re-starting the game in
+   * configuration settings are stored. Most such changes are handled by re-starting the Game in
    * progress (if any).
    *
    * @param sharedPreferences configuration settings.
@@ -180,7 +185,7 @@ public class MainActivity extends AppCompatActivity
    */
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    // TODO Set any necessary flags, etc. to indicate game should be restarted.
+    // TODO Set any necessary flags, etc. to indicate Game should be restarted.
   }
 
   private void pauseGame() {
@@ -195,19 +200,32 @@ public class MainActivity extends AppCompatActivity
 
   private void resumeGame() {
     running = true;
+    if (game == null) {
+      int numDigits = preferences.getInt(getString(R.string.num_digits_key),
+          getResources().getInteger(R.integer.num_digits_default));
+      int timeLimit = preferences.getInt(getString(R.string.time_limit_key),
+          getResources().getInteger(R.integer.time_limit_default));
+      int gameTime = preferences.getInt(getString(R.string.game_time_key),
+          getResources().getInteger(R.integer.game_time_default));
+      game = new Game(timeLimit, numDigits, gameTime);
+    }
     updateValue();
     // TODO Update any additional necessary fields.
     invalidateOptionsMenu();
   }
 
+  private void recordRound(Round.Category selection) {
+    Round.Category category = Round.Category.fromValue(value);
+    Round round = new Round(value, category, selection);
+    game.add(round);
+  }
+
   private void updateValue() {
-    int numDigits = PreferenceManager.getDefaultSharedPreferences(this)
-        .getInt(getString(R.string.num_digits_key),
-            getResources().getInteger(R.integer.num_digits_default));
+    int numDigits = preferences.getInt(getString(R.string.num_digits_key),
+        getResources().getInteger(R.integer.num_digits_default));
     int valueLimit = (int) Math.pow(10, numDigits) - 1;
-    int timeLimit = PreferenceManager.getDefaultSharedPreferences(this)
-        .getInt(getString(R.string.time_limit_key),
-            getResources().getInteger(R.integer.time_limit_default));
+    int timeLimit = preferences.getInt(getString(R.string.time_limit_key),
+        getResources().getInteger(R.integer.time_limit_default));
     if (timer != null) {
       timer.cancel();
     }
@@ -219,6 +237,8 @@ public class MainActivity extends AppCompatActivity
     valueDisplay.getPaint().getTextBounds(valueString, 0, valueString.length(), displayRect);
     displayRect.top += valueDisplay.getBaseline();
     displayRect.bottom += valueDisplay.getBaseline();
+    displayRect.left = 250;
+    displayRect.right = 950;
     if (timeLimit != 0) {
       timer = new Timer();
       timer.schedule(new TimeoutTask(), timeLimit * 1000);
@@ -263,15 +283,15 @@ public class MainActivity extends AppCompatActivity
       if (speed >= SPEED_THRESHOLD && ellipticalDistance >= 1) {
         if (Math.abs(deltaY) * containerWidth <= Math.abs(deltaX) * containerHeight) {
           if (deltaX > 0) {
-            Log.d("Trace", "Right fling");
+            Log.d("Trace", "Buzz fling");
           } else {
-            Log.d("Trace", "Left fling");
+            Log.d("Trace", "Fuzz fling");
           }
         } else {
           if (deltaY > 0) {
-            Log.d("Trace", "Down fling");
+            Log.d("Trace", "Neither fling");
           } else {
-            Log.d("Trace", "Up fling");
+            Log.d("Trace", "FizzBuzz fling");
           }
         }
         updateValue();

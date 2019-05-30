@@ -1,10 +1,11 @@
-package edu.cnm.deepdive.fizzbuzz;
+package edu.cnm.deepdive.fizzbuzz.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SeekBarPreference;
+import edu.cnm.deepdive.fizzbuzz.R;
 
 /**
  * Activity hosting {@link SettingsFragment}, in order to display and allow user changes to
@@ -38,11 +39,10 @@ public class SettingsActivity extends AppCompatActivity {
      * Inflates and presents contents of preference resource. Attributes not supported (by the
      * minimum API targeted) for definition in the preference XML are set after loading, based on
      * other resource values.
-     * 
+     *
      * @param savedInstanceState state of preference UI widgets prior to {@link #onDestroy()}
      * (currently ignored, since changes are written immediately to {@link
      * android.content.SharedPreferences}).
-     *
      * @param rootKey base key prefix for this app's preferences.
      */
     @Override
