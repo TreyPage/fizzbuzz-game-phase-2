@@ -249,7 +249,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void run() {
-      runOnUiThread(() -> updateValue());
+      runOnUiThread(() -> {
+        recordRound(null);
+        updateValue();
+      });
     }
 
   }
