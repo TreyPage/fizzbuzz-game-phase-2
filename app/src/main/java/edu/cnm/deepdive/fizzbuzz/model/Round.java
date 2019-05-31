@@ -1,10 +1,13 @@
 package edu.cnm.deepdive.fizzbuzz.model;
 
 import androidx.annotation.NonNull;
+import java.io.Serializable;
 
-public class Round {
+public class Round implements Serializable {
 
   private static final String FORMAT = "%1$d (%2$s); Your Selection: %3$s";
+  private static final long serialVersionUID = -4219534739377662816L;
+
   private final int value;
   private final Category category;
   private final Category selection;
@@ -20,6 +23,24 @@ public class Round {
   @Override
   public String toString() {
     return String.format(FORMAT, value, category, selection);
+  }
+
+  private void readObject(java.io.ObjectInputStream in)
+      throws java.io.IOException, ClassNotFoundException {
+    throw new java.io.NotSerializableException("edu.cnm.deepdive.fizzbuzz.model.Round");
+  }
+
+  private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+    throw new java.io.NotSerializableException("edu.cnm.deepdive.fizzbuzz.model.Round");
+  }
+
+  private void readObject(java.io.ObjectInputStream in)
+      throws java.io.IOException, ClassNotFoundException {
+    throw new java.io.NotSerializableException("edu.cnm.deepdive.fizzbuzz.model.Round");
+  }
+
+  private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+    throw new java.io.NotSerializableException("edu.cnm.deepdive.fizzbuzz.model.Round");
   }
 
   public enum Category {

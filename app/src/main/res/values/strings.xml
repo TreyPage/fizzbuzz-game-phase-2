@@ -22,5 +22,6 @@
   <string name="game_time_key">game_time</string>
   <string name="game_time_title">Game duration</string>
   <string name="game_time_summary">Duration of game in seconds</string>
+  <string name="status">Current Game Status</string>
 
 </resources>
