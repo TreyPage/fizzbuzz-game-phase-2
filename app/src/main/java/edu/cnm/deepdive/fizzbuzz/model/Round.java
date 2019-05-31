@@ -25,23 +25,6 @@ public class Round implements Serializable {
     return String.format(FORMAT, value, category, selection);
   }
 
-  private void readObject(java.io.ObjectInputStream in)
-      throws java.io.IOException, ClassNotFoundException {
-    throw new java.io.NotSerializableException("edu.cnm.deepdive.fizzbuzz.model.Round");
-  }
-
-  private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-    throw new java.io.NotSerializableException("edu.cnm.deepdive.fizzbuzz.model.Round");
-  }
-
-  private void readObject(java.io.ObjectInputStream in)
-      throws java.io.IOException, ClassNotFoundException {
-    throw new java.io.NotSerializableException("edu.cnm.deepdive.fizzbuzz.model.Round");
-  }
-
-  private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-    throw new java.io.NotSerializableException("edu.cnm.deepdive.fizzbuzz.model.Round");
-  }
 
   public enum Category {
     FIZZ, BUZZ, FIZZBUZZ, NEITHER;

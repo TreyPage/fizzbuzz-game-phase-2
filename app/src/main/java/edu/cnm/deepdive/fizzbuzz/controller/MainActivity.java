@@ -149,7 +149,8 @@ public class MainActivity extends AppCompatActivity
         break;
       case R.id.status:
         intent = new Intent(this, StatusActivity.class);
-        startActivity(intent); //TODO add game information to intent
+        intent.putExtra(getString(R.string.game_data_key), game);
+        startActivity(intent);
         break;
       default:
         handled = super.onOptionsItemSelected(item);
