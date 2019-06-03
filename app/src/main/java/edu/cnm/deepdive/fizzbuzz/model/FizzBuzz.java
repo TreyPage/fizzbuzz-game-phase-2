@@ -3,21 +3,24 @@ package edu.cnm.deepdive.fizzbuzz.model;
 /**
  * Includes several public methods and constants for computing FizzBuzz values.
  * <p>This class includes <code>static</code> methods that take <code>int</code>
- * parameters and returns <code>boolean</code> and {@link String} results,
- * indicating whether the specified values are divisible by 3 (Fizz), 5 (Buzz),
- * or 3 and 5 (FizzBuzz)</p>
+ * parameters and returns <code>boolean</code> and {@link String} results, indicating whether the
+ * specified values are divisible by 3 (Fizz), 5 (Buzz), or 3 and 5 (FizzBuzz)</p>
  *
  * @author Trey Page &amp; Deep Dive Coding Java+Android Cohort 7.
  * @version 1.0.0
- *
  */
 public class FizzBuzz {
 
-  private FizzBuzz(){}
+  private FizzBuzz() {
+  }
 
-  /** {@link String} value indicating a number divisible by 3*/
+  /**
+   * {@link String} value indicating a number divisible by 3
+   */
   public static final String FIZZ = "Fizz";
-  /** {@link String} value indicating a number divisible by 5*/
+  /**
+   * {@link String} value indicating a number divisible by 5
+   */
   public static final String BUZZ = "Buzz";
 
   /**
