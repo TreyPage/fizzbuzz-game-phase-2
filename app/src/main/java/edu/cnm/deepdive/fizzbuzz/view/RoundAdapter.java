@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.fizzbuzz.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import edu.cnm.deepdive.fizzbuzz.R;
 import edu.cnm.deepdive.fizzbuzz.model.Round;
+import edu.cnm.deepdive.fizzbuzz.model.Round.Category;
 import java.util.List;
 
 public class RoundAdapter extends ArrayAdapter<Round> {
 
   private Drawable correct;
   private Drawable incorrect;
+  private String[] categoryNames;
 
   @NonNull
   @Override
@@ -30,7 +33,7 @@ public class RoundAdapter extends ArrayAdapter<Round> {
     ImageView resultDisplay = layout.findViewById(R.id.result_display);
     Round round = getItem(position);
     valueDisplay.setText(Integer.toString(round.getValue()));
-    categoryDisplay.setText(round.getCategory().toString());
+    categoryDisplay.setText(categoryNames[round.getCategory().ordinal()]);
     resultDisplay.setImageDrawable(round.isCorrect() ? correct : incorrect);
     layout.setBackgroundColor(ContextCompat
         .getColor(getContext(), round.isCorrect() ? R.color.correct : R.color.incorrect));
@@ -41,6 +44,15 @@ public class RoundAdapter extends ArrayAdapter<Round> {
     super(context, R.layout.round_item, objects);
     correct = context.getDrawable(R.drawable.correct_check);
     incorrect = context.getDrawable(R.drawable.incorrect_x);
+    Category[] categories = Category.values();
+    categoryNames = new String[categories.length];
+    Resources res = context.getResources();
+    String pkg = context.getPackageName();
+    for (int i = 0; i < categories.length; i ++) {
+      String name = categories[i].toString();
+      int id = res.getIdentifier(name, "string", pkg);
+      categoryNames[i] = context.getString(id);
+    }
   }
 
 }

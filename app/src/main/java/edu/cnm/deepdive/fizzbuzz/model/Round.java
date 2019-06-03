@@ -43,7 +43,10 @@ public class Round implements Serializable {
   }
 
   public enum Category {
-    FIZZ, BUZZ, FIZZBUZZ, NEITHER;
+    FIZZ,
+    BUZZ,
+    FIZZBUZZ,
+    NEITHER;
 
     public static Category fromValue(int value) {
       Category category = null;
@@ -59,6 +62,18 @@ public class Round implements Serializable {
         category = NEITHER;
       }
       return category;
+    }
+
+    /**
+     * Returns the name of this enum constant, as contained in the declaration.  This method may be
+     * overridden, though it typically isn't necessary or desirable.  An enum type should override
+     * this method when a more "programmer-friendly" string form exists.
+     *
+     * @return the name of this enum constant
+     */
+    @Override
+    public String toString() {
+      return super.toString().toLowerCase();
     }
   }
 }

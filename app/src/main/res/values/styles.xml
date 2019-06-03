@@ -8,4 +8,9 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="RoundItem" parent="AppTheme">
+    <item name="android:textSize">20sp</item>
+    <item name="android:textColor">#FF000000</item>
+  </style>
+
 </resources>

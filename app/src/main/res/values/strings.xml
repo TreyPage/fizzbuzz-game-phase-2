@@ -25,4 +25,9 @@
   <string name="status">Current Game Status</string>
   <string name="game_data_key">game_data</string>
 
+  <string name="fizz">Fizz</string>
+  <string name="buzz">Buzz</string>
+  <string name="fizzbuzz">FizzBuzz</string>
+  <string name="neither"> </string>
+
 </resources>
