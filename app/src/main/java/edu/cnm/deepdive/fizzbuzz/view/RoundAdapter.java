@@ -2,7 +2,6 @@ package edu.cnm.deepdive.fizzbuzz.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import edu.cnm.deepdive.fizzbuzz.R;
 import edu.cnm.deepdive.fizzbuzz.model.Round;
 import java.util.List;
@@ -32,6 +32,8 @@ public class RoundAdapter extends ArrayAdapter<Round> {
     valueDisplay.setText(Integer.toString(round.getValue()));
     categoryDisplay.setText(round.getCategory().toString());
     resultDisplay.setImageDrawable(round.isCorrect() ? correct : incorrect);
+    layout.setBackgroundColor(ContextCompat
+        .getColor(getContext(), round.isCorrect() ? R.color.correct : R.color.incorrect));
     return layout;
   }
 
