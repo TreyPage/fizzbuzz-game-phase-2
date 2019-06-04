@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity
       game = (Game) savedInstanceState.getSerializable(gameDataKey);
     }
     if (game == null) {
-      game = new Game(timeLimit,numDigits,gameDuration);
+      game = new Game(timeLimit, numDigits, gameDuration);
     }
   }
 
@@ -312,19 +312,21 @@ public class MainActivity extends AppCompatActivity
           deltaX * deltaX / radiusX / radiusX + deltaY * deltaY / radiusY / radiusY;
       double speed = Math.hypot(velocityX, velocityY);
       if (speed >= SPEED_THRESHOLD && ellipticalDistance >= 1) {
+        Category selection;
         if (Math.abs(deltaY) * containerWidth <= Math.abs(deltaX) * containerHeight) {
           if (deltaX > 0) {
-            recordRound(Category.BUZZ);
+            selection = Category.BUZZ;
           } else {
-            recordRound(Category.FIZZ);
+            selection = Category.FIZZ;
           }
         } else {
           if (deltaY > 0) {
-            recordRound(Category.NEITHER);
+            selection = Category.NEITHER;
           } else {
-            recordRound(Category.FIZZBUZZ);
+            selection = Category.FIZZBUZZ;
           }
         }
+        recordRound(selection);
         updateValue();
         handled = true;
       }
@@ -341,7 +343,5 @@ public class MainActivity extends AppCompatActivity
       }
       return handled;
     }
-
   }
-
 }

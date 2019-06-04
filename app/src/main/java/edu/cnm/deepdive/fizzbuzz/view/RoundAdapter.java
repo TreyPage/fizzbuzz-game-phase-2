@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.fizzbuzz.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -47,6 +48,7 @@ public class RoundAdapter extends ArrayAdapter<Round> {
     }
   }
 
+  @SuppressLint("SetTextI18n")
   @NonNull
   @Override
   public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
