@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
     preferences.registerOnSharedPreferenceChangeListener(this);
     readSettings();
-    String gameDataKey = getString(R.string.game_data_key);
-    String gameTimeElapsedKey = getString(R.string.game_time_elapsed_key);
+    gameDataKey = getString(R.string.game_data_key);
+    gameTimeElapsedKey = getString(R.string.game_time_elapsed_key);
     if (savedInstanceState != null) {
       game = (Game) savedInstanceState.getSerializable(gameDataKey);
       gameTimeElapsed = savedInstanceState.getLong(gameTimeElapsedKey, 0);
@@ -304,8 +304,9 @@ public class MainActivity extends AppCompatActivity
     int containerWidth = valueContainer.getWidth();
     int textHeight;
     int textWidth;
-    String valueString = Integer.toString(value);
+    String valueString;
     value = 1 + rng.nextInt(valueLimit);
+    valueString = Integer.toString(value);
     valueDisplay.setTranslationX(0);
     valueDisplay.setTranslationY(0);
     valueDisplay.setText(valueString);
