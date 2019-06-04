@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
   private Random rng = new Random();
   private int value;
   private boolean running;
+  private boolean complete;
   private TextView valueDisplay;
   private ViewGroup valueContainer;
   private Rect displayRect = new Rect();
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity
   private int numDigits;
   private int timeLimit;
   private int gameDuration;
-  private Animator fade;
+  //private Animator fade;
 
   /**
    * Initializes this activity when created, and when restored after {@link #onDestroy()} (for
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity
     if (game == null) {
       game = new Game(timeLimit, numDigits, gameDuration);
     }
-    fade = AnimatorInflater.loadAnimator(this, R.animator.indicator_fade);
+  //  fade = AnimatorInflater.loadAnimator(this, R.animator.indicator_fade);
   }
 
   /**
@@ -167,6 +168,11 @@ public class MainActivity extends AppCompatActivity
         intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
         break;
+      case R.id.replay:
+        pauseGame();
+        game = new Game(timeLimit, numDigits, gameDuration);
+        pauseGame();
+        break;
       case R.id.status:
         intent = new Intent(this, StatusActivity.class);
         intent.putExtra(getString(R.string.game_data_key), game);
@@ -227,10 +233,7 @@ public class MainActivity extends AppCompatActivity
 
   private void pauseGame() {
     running = false;
-    if (timer != null) {
-      timer.cancel();
-      timer = null;
-    }
+    stopTimer();
     // TODO Update any additional necessary fields.
     invalidateOptionsMenu();
   }
@@ -245,11 +248,19 @@ public class MainActivity extends AppCompatActivity
     invalidateOptionsMenu();
   }
 
+  private void stopTimer() {
+    if (timer != null) {
+      timer.cancel();
+      timer = null;
+    }
+  }
+
   private void recordRound(Round.Category selection) {
     Round.Category category = Round.Category.fromValue(value);
     Round round = new Round(value, category, selection);
     game.add(round);
     ImageView indicator;
+    Animator fade = AnimatorInflater.loadAnimator(this, R.animator.indicator_fade);
     switch (category) {
       case FIZZ:
         indicator = findViewById(
@@ -283,9 +294,6 @@ public class MainActivity extends AppCompatActivity
     int textHeight;
     int textWidth;
     String valueString = Integer.toString(value);
-    if (timer != null) {
-      timer.cancel();
-    }
     value = 1 + rng.nextInt(valueLimit);
     valueDisplay.setTranslationX(0);
     valueDisplay.setTranslationY(0);
@@ -313,7 +321,18 @@ public class MainActivity extends AppCompatActivity
         updateValue();
       });
     }
+  }
 
+  private class GameTimeoutTask extends TimerTask {
+
+    /**
+     * The action to be performed by this timer task.
+     */
+    @Override
+    public void run() {
+      complete = true;
+      pauseGame();
+    }
   }
 
   private class FlingListener extends GestureDetector.SimpleOnGestureListener {
@@ -344,19 +363,22 @@ public class MainActivity extends AppCompatActivity
           deltaX * deltaX / radiusX / radiusX + deltaY * deltaY / radiusY / radiusY;
       double speed = Math.hypot(velocityX, velocityY);
       if (speed >= SPEED_THRESHOLD && ellipticalDistance >= 1) {
+        stopTimer();
+        Category selection;
         if (Math.abs(deltaY) * containerWidth <= Math.abs(deltaX) * containerHeight) {
           if (deltaX > 0) {
-            recordRound(Category.BUZZ);
+            selection = Category.BUZZ;
           } else {
-            recordRound(Category.FIZZ);
+            selection = Category.FIZZ;
           }
         } else {
           if (deltaY > 0) {
-            recordRound(Category.NEITHER);
+            selection = Category.NEITHER;
           } else {
-            recordRound(Category.FIZZBUZZ);
+            selection = Category.FIZZBUZZ;
           }
         }
+        recordRound(selection);
         updateValue();
         handled = true;
       }
