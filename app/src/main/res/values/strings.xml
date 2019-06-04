@@ -30,4 +30,11 @@
   <string name="fizzbuzz">FizzBuzz</string>
   <string name="neither"> </string>
 
+  <string name="number_header">#</string>
+  <string name="category_header">Category</string>
+  <string name="result_header">Correct?</string>
+
+  <string name="correct_description">Correct!</string>
+  <string name="incorrect_description">Incorrect!</string>
+
 </resources>

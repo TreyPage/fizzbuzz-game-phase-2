@@ -19,9 +19,33 @@ import java.util.List;
 
 public class RoundAdapter extends ArrayAdapter<Round> {
 
-  private Drawable correct;
-  private Drawable incorrect;
+  private Drawable correctDraw;
+  private Drawable incorrectDraw;
+  private String correctDescript;
+  private String incorrectDescript;
+  private int correctColor;
+  private int incorrectColor;
   private String[] categoryNames;
+
+
+  public RoundAdapter(@NonNull Context context, @NonNull List<Round> objects) {
+    super(context, R.layout.round_item, objects);
+    correctDraw = context.getDrawable(R.drawable.correct_check);
+    incorrectDraw = context.getDrawable(R.drawable.incorrect_x);
+    correctDescript = context.getString(R.string.correct_description);
+    incorrectDescript = context.getString(R.string.incorrect_description);
+    correctColor = ContextCompat.getColor(getContext(), R.color.correct);
+    incorrectColor = ContextCompat.getColor(getContext(), R.color.incorrect);
+    Category[] categories = Category.values();
+    categoryNames = new String[categories.length];
+    Resources res = context.getResources();
+    String pkg = context.getPackageName();
+    for (int i = 0; i < categories.length; i ++) {
+      String name = categories[i].toString();
+      int id = res.getIdentifier(name, "string", pkg);
+      categoryNames[i] = context.getString(id);
+    }
+  }
 
   @NonNull
   @Override
@@ -34,25 +58,16 @@ public class RoundAdapter extends ArrayAdapter<Round> {
     Round round = getItem(position);
     valueDisplay.setText(Integer.toString(round.getValue()));
     categoryDisplay.setText(categoryNames[round.getCategory().ordinal()]);
-    resultDisplay.setImageDrawable(round.isCorrect() ? correct : incorrect);
-    layout.setBackgroundColor(ContextCompat
-        .getColor(getContext(), round.isCorrect() ? R.color.correct : R.color.incorrect));
-    return layout;
-  }
-
-  public RoundAdapter(@NonNull Context context, @NonNull List<Round> objects) {
-    super(context, R.layout.round_item, objects);
-    correct = context.getDrawable(R.drawable.correct_check);
-    incorrect = context.getDrawable(R.drawable.incorrect_x);
-    Category[] categories = Category.values();
-    categoryNames = new String[categories.length];
-    Resources res = context.getResources();
-    String pkg = context.getPackageName();
-    for (int i = 0; i < categories.length; i ++) {
-      String name = categories[i].toString();
-      int id = res.getIdentifier(name, "string", pkg);
-      categoryNames[i] = context.getString(id);
+    if (round.isCorrect()) {
+      resultDisplay.setImageDrawable(correctDraw);
+      resultDisplay.setContentDescription(correctDescript);
+      layout.setBackgroundColor(correctColor);
+    } else {
+      resultDisplay.setImageDrawable(incorrectDraw);
+      resultDisplay.setContentDescription(incorrectDescript);
+      layout.setBackgroundColor(incorrectColor);
     }
+    return layout;
   }
 
 }

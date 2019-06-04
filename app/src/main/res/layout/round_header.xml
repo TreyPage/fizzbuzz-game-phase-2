@@ -4,10 +4,10 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:padding="@dimen/roll_item_padding"
-  android:theme="@style/RoundItem">
+  android:theme="@style/RoundHeader">
 
   <TextView
-    android:id="@+id/value_display"
+    android:text="@string/number_header"
     android:layout_weight="1"
     android:layout_gravity="center"
     android:layout_width="0dp"
@@ -15,15 +15,15 @@
     android:textAlignment="center"/>
 
   <TextView
-    android:id="@+id/category_display"
+    android:text="@string/category_header"
     android:layout_weight="2"
     android:layout_gravity="center"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:textAlignment="center"/>
 
-  <ImageView
-    android:id="@+id/result_display"
+  <TextView
+    android:text="@string/result_header"
     android:layout_weight="1"
     android:layout_gravity="center"
     android:layout_width="0dp"
