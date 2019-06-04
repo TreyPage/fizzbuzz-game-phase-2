@@ -1,5 +1,12 @@
 package edu.cnm.deepdive.fizzbuzz.controller;
 
+import static edu.cnm.deepdive.fizzbuzz.model.Round.Category.BUZZ;
+import static edu.cnm.deepdive.fizzbuzz.model.Round.Category.FIZZ;
+import static edu.cnm.deepdive.fizzbuzz.model.Round.Category.FIZZBUZZ;
+import static edu.cnm.deepdive.fizzbuzz.model.Round.Category.NEITHER;
+
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
@@ -10,6 +17,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
@@ -45,6 +53,7 @@ public class MainActivity extends AppCompatActivity
   private int numDigits;
   private int timeLimit;
   private int gameDuration;
+  private Animator fade;
 
   /**
    * Initializes this activity when created, and when restored after {@link #onDestroy()} (for
@@ -71,6 +80,7 @@ public class MainActivity extends AppCompatActivity
     if (game == null) {
       game = new Game(timeLimit, numDigits, gameDuration);
     }
+    fade = AnimatorInflater.loadAnimator(this, R.animator.indicator_fade);
   }
 
   /**
@@ -202,7 +212,8 @@ public class MainActivity extends AppCompatActivity
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     readSettings();
-    //TODO set any necessary flags, threads, etc. to restart game if necessary
+    pauseGame();
+    game = new Game(timeLimit, numDigits, gameDuration);
   }
 
   private void readSettings() {
@@ -238,6 +249,27 @@ public class MainActivity extends AppCompatActivity
     Round.Category category = Round.Category.fromValue(value);
     Round round = new Round(value, category, selection);
     game.add(round);
+    ImageView indicator;
+    switch (category) {
+      case FIZZ:
+        indicator = findViewById(
+            round.isCorrect() ? R.id.correct_fizz_indicator : R.id.incorrect_fizz_indicator);
+        break;
+      case BUZZ:
+        indicator = findViewById(
+            round.isCorrect() ? R.id.correct_buzz_indicator : R.id.incorrect_buzz_indicator);
+        break;
+      case FIZZBUZZ:
+        indicator = findViewById(
+            round.isCorrect() ? R.id.correct_fizzbuzz_indicator : R.id.incorrect_fizzbuzz_indicator);
+        break;
+      default:
+        indicator = findViewById(
+            round.isCorrect() ? R.id.correct_neither_indicator : R.id.incorrect_neither_indicator);
+        break;
+    }
+    fade.setTarget(indicator);
+    fade.start();
   }
 
   private void updateValue() {
@@ -312,21 +344,19 @@ public class MainActivity extends AppCompatActivity
           deltaX * deltaX / radiusX / radiusX + deltaY * deltaY / radiusY / radiusY;
       double speed = Math.hypot(velocityX, velocityY);
       if (speed >= SPEED_THRESHOLD && ellipticalDistance >= 1) {
-        Category selection;
         if (Math.abs(deltaY) * containerWidth <= Math.abs(deltaX) * containerHeight) {
           if (deltaX > 0) {
-            selection = Category.BUZZ;
+            recordRound(Category.BUZZ);
           } else {
-            selection = Category.FIZZ;
+            recordRound(Category.FIZZ);
           }
         } else {
           if (deltaY > 0) {
-            selection = Category.NEITHER;
+            recordRound(Category.NEITHER);
           } else {
-            selection = Category.FIZZBUZZ;
+            recordRound(Category.FIZZBUZZ);
           }
         }
-        recordRound(selection);
         updateValue();
         handled = true;
       }

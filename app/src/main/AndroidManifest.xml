@@ -9,16 +9,25 @@
     android:roundIcon="@mipmap/fizzbuzz_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
+
     <activity
       android:name=".controller.StatusActivity"
       android:label="@string/status"
+      android:launchMode="singleTop"
       android:parentActivityName=".controller.MainActivity"
       />
+
     <activity
       android:label="Settings"
+      android:launchMode="singleTop"
       android:name=".controller.SettingsActivity"
-      android:parentActivityName=".controller.MainActivity"/>
-    <activity android:name=".controller.MainActivity">
+      android:parentActivityName=".controller.MainActivity"
+      />
+
+    <activity
+      android:name=".controller.MainActivity"
+      android:launchMode="singleTop">
+
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 

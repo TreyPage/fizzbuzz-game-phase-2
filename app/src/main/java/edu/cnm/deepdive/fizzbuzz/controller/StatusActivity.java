@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.fizzbuzz.controller;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -12,13 +13,12 @@ import java.util.List;
 
 public class StatusActivity extends AppCompatActivity {
 
-  private ListView roundList;
-
+  @SuppressLint("SetTextI18n")
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_status);
-    roundList = findViewById(R.id.round_list);
+    ListView roundList = findViewById(R.id.round_list);
     Game game = (Game) getIntent().getSerializableExtra(getString(R.string.game_data_key));
     List<Round> rounds = game.getRounds();
     int totalRounds = rounds.size();
