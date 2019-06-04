@@ -2,7 +2,6 @@ package edu.cnm.deepdive.fizzbuzz.controller;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -65,7 +64,13 @@ public class MainActivity extends AppCompatActivity
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
     preferences.registerOnSharedPreferenceChangeListener(this);
     readSettings();
-    // TODO Restore any necessary fields, set Game state, etc.
+    if (savedInstanceState != null) {
+      String gameDataKey = getString(R.string.game_data_key);
+      game = (Game) savedInstanceState.getSerializable(gameDataKey);
+    }
+    if (game == null) {
+      game = new Game(timeLimit,numDigits,gameDuration);
+    }
   }
 
   /**
@@ -95,7 +100,8 @@ public class MainActivity extends AppCompatActivity
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-    // TODO Save any necessary fields.
+    String gameDataKey = getString(R.string.game_data_key);
+    outState.putSerializable(gameDataKey, game);
   }
 
   /**
