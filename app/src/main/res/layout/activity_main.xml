@@ -85,6 +85,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     android:visibility="visible"
     android:alpha="0"/>
+
   <ImageView
     android:layout_width="100dp"
     android:layout_height="100dp"

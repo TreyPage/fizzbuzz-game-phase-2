@@ -21,8 +21,6 @@
     android:id="@+id/replay"
     android:title="@string/replay"
     android:icon="@drawable/replay"
-    android:visible="false"
-    android:enabled="false"
     app:showAsAction="always"/>
 
   <item

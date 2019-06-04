@@ -23,6 +23,8 @@
   <string name="game_time_title">Game duration</string>
   <string name="game_time_summary">Duration of game in seconds</string>
   <string name="status">Current Game Status</string>
+
+  <string name="game_time_elapsed_key">game_time_elapsed</string>
   <string name="game_data_key">game_data</string>
 
   <string name="fizz">Fizz</string>
