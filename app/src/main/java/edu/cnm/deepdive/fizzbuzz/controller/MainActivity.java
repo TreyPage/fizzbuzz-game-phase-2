@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity
       complete = true;
       runOnUiThread(() -> {
         pauseGame();
-        Toast.makeText(MainActivity.this,"Game Over",Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this,R.string.game_over_toast,Toast.LENGTH_LONG).show();
         showStats();
       });
     }
