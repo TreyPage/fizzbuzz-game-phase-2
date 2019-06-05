@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.preference.PreferenceManager;
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity
   private int gameDuration;
   private long gameTimerStart;
   private long gameTimeElapsed;
-  String gameDataKey;
-  String gameTimeElapsedKey;
+  private String gameDataKey;
+  private String gameTimeElapsedKey;
 
   /**
    * Initializes this activity when created, and when restored after {@link #onDestroy()} (for
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity
       gameTimeElapsed = savedInstanceState.getLong(gameTimeElapsedKey, 0);
     }
     if (game == null) {
-      game = new Game(timeLimit, numDigits, gameDuration);
+      newGame();
     }
   }
 
@@ -169,9 +170,8 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
         break;
       case R.id.replay:
-        game = new Game(timeLimit, numDigits, gameDuration);
-        gameTimeElapsed = 0;
-        complete = false;
+        newGame();
+        Toast.makeText(this, R.string.toast_string, Toast.LENGTH_LONG).show();
         pauseGame();
         break;
       case R.id.status:
@@ -184,6 +184,12 @@ public class MainActivity extends AppCompatActivity
         break;
     }
     return handled;
+  }
+
+  private void newGame() {
+    game = new Game(timeLimit, numDigits, gameDuration);
+    gameTimeElapsed = 0;
+    complete = false;
   }
 
   /**
@@ -244,8 +250,7 @@ public class MainActivity extends AppCompatActivity
   private void resumeGame() {
     running = true;
     if (game == null) {
-      game = new Game(timeLimit, numDigits, gameDuration);
-      gameTimeElapsed = 0;
+      newGame();
     }
     updateValue();
     startGameTimer();

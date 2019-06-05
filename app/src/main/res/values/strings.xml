@@ -39,5 +39,6 @@
   <string name="correct_description">Correct!</string>
   <string name="incorrect_description">Incorrect!</string>
   <string name="replay">replay</string>
+  <string name="toast_string">Your Game Has Reset! Click Play!</string>
 
 </resources>
