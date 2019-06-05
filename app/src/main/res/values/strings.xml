@@ -41,4 +41,9 @@
   <string name="replay">replay</string>
   <string name="toast_string">Your Game Has Reset! Click Play!</string>
 
+  <string name="direction_top"><![CDATA[3&5]]></string>
+  <string name="direction_bottom">—</string>
+  <string name="direction_left">3</string>
+  <string name="direction_right">5</string>
+
 </resources>

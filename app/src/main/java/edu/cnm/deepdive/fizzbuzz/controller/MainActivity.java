@@ -175,15 +175,19 @@ public class MainActivity extends AppCompatActivity
         pauseGame();
         break;
       case R.id.status:
-        intent = new Intent(this, StatusActivity.class);
-        intent.putExtra(getString(R.string.game_data_key), game);
-        startActivity(intent);
+        showStats();
         break;
       default:
         handled = super.onOptionsItemSelected(item);
         break;
     }
     return handled;
+  }
+
+  private void showStats() {
+    Intent intent = new Intent(this, StatusActivity.class);
+    intent.putExtra(getString(R.string.game_data_key), game);
+    startActivity(intent);
   }
 
   private void newGame() {
@@ -355,8 +359,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void run() {
       complete = true;
-      runOnUiThread(() -> pauseGame());
+      runOnUiThread(() -> {
+        pauseGame();
+        Toast.makeText(MainActivity.this,"Game Over",Toast.LENGTH_LONG).show();
+        showStats();
+      });
     }
+
   }
 
   private class FlingListener extends GestureDetector.SimpleOnGestureListener {
