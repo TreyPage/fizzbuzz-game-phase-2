@@ -45,5 +45,6 @@
   <string name="direction_bottom">—</string>
   <string name="direction_left">3</string>
   <string name="direction_right">5</string>
+  <string name="game_over_toast">Game Over</string>
 
 </resources>
