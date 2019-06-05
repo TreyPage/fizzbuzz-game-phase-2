@@ -46,5 +46,7 @@
   <string name="direction_left">3</string>
   <string name="direction_right">5</string>
   <string name="game_over_toast">Game Over</string>
+  <string name="user_selection_header">Selection</string>
 
+  <string name="clock_format">%1$d:%2$04.1f</string>
 </resources>

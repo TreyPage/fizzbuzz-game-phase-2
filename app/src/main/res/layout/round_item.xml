@@ -22,6 +22,15 @@
     android:layout_height="wrap_content"
     android:textAlignment="center"/>
 
+  <TextView
+    android:id="@+id/user_selected"
+    android:layout_weight="2"
+    android:layout_gravity="center"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:textAlignment="center"/>
+
+
   <ImageView
     android:id="@+id/result_display"
     android:layout_weight="1"

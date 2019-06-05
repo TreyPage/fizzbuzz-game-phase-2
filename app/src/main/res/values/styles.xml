@@ -23,9 +23,18 @@
 
   <style name="DirectionMarker" parent="AppTheme">
     <item name="android:textStyle">bold</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingRight">4dp</item>
     <item name="android:textColor">#FFD0D0D0</item>
     <item name="android:textSize">36sp</item>
   <item name="android:includeFontPadding">false</item>
   </style>
 
+  <style name="ClockDisplay" parent="AppTheme">
+    <item name="android:textColor">@color/darkText</item>
+    <item name="android:textSize">28sp</item>
+    <item name="android:includeFontPadding">false</item>
+    <item name="android:padding">4dp</item>
+  </style>
+  
 </resources>

@@ -23,6 +23,14 @@
     android:textAlignment="center"/>
 
   <TextView
+    android:text="@string/user_selection_header"
+    android:layout_weight="2"
+    android:layout_gravity="center"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:textAlignment="center"/>
+
+  <TextView
     android:text="@string/result_header"
     android:layout_weight="1"
     android:layout_gravity="center"

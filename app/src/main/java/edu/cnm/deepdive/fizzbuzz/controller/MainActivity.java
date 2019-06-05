@@ -41,11 +41,13 @@ public class MainActivity extends AppCompatActivity
   private boolean running;
   private boolean complete;
   private TextView valueDisplay;
+  private TextView clockDisplay;
   private ViewGroup valueContainer;
   private Rect displayRect = new Rect();
   private GestureDetectorCompat detector;
   private Timer valueTimer;
   private Timer gameTimer;
+  private Timer clockTimer;
   private SharedPreferences preferences;
   private Game game;
   private int numDigits;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity
   private long gameTimeElapsed;
   private String gameDataKey;
   private String gameTimeElapsedKey;
+  private String clockFormat;
 
   /**
    * Initializes this activity when created, and when restored after {@link #onDestroy()} (for
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     valueDisplay = findViewById(R.id.value_display);
+    clockDisplay = findViewById(R.id.clock_display);
     valueContainer = (ViewGroup) valueDisplay.getParent();
     detector = new GestureDetectorCompat(this, new FlingListener());
     valueContainer.setOnTouchListener(this);
@@ -76,12 +80,15 @@ public class MainActivity extends AppCompatActivity
     readSettings();
     gameDataKey = getString(R.string.game_data_key);
     gameTimeElapsedKey = getString(R.string.game_time_elapsed_key);
+    clockFormat = getString(R.string.clock_format);
     if (savedInstanceState != null) {
       game = (Game) savedInstanceState.getSerializable(gameDataKey);
       gameTimeElapsed = savedInstanceState.getLong(gameTimeElapsedKey, 0);
+      gameTimerStart = System.currentTimeMillis();
+      updateClock();
     }
     if (game == null) {
-      newGame();
+      initgame();
     }
   }
 
@@ -170,7 +177,7 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
         break;
       case R.id.replay:
-        newGame();
+        initgame();
         Toast.makeText(this, R.string.toast_string, Toast.LENGTH_LONG).show();
         pauseGame();
         break;
@@ -190,10 +197,12 @@ public class MainActivity extends AppCompatActivity
     startActivity(intent);
   }
 
-  private void newGame() {
+  private void initgame() {
     game = new Game(timeLimit, numDigits, gameDuration);
     gameTimeElapsed = 0;
     complete = false;
+    gameTimerStart = System.currentTimeMillis();
+    updateClock();
   }
 
   /**
@@ -254,7 +263,7 @@ public class MainActivity extends AppCompatActivity
   private void resumeGame() {
     running = true;
     if (game == null) {
-      newGame();
+      initgame();
     }
     updateValue();
     startGameTimer();
@@ -275,6 +284,10 @@ public class MainActivity extends AppCompatActivity
       gameTimer.cancel();
       gameTimer = null;
       gameTimeElapsed += System.currentTimeMillis() - gameTimerStart;
+    }
+    if (clockTimer != null) {
+      clockTimer.cancel();
+      clockTimer = null;
     }
   }
 
@@ -340,6 +353,24 @@ public class MainActivity extends AppCompatActivity
     gameTimer = new Timer();
     gameTimer.schedule(new GameTimeoutTask(), 1000L * gameDuration - gameTimeElapsed);
     gameTimerStart = System.currentTimeMillis();
+    clockTimer = new Timer();
+    clockTimer.schedule(new ClockTimerTask(), 0, 100);
+  }
+
+  private void updateClock() {
+    long remaining = (running || gameTimeElapsed > 0) ?
+        gameDuration * 1000L - (System.currentTimeMillis() - gameTimerStart + gameTimeElapsed)
+        : gameDuration * 1000L;
+    int min;
+    double sec;
+    if (remaining > 0) {
+      min = (int) remaining / 60000;
+      sec = (remaining % 60000) / 1000.0;
+    } else {
+      min = 0;
+      sec = 0;
+    }
+    clockDisplay.setText(String.format(clockFormat, min, sec));
   }
 
   private class TimeoutTask extends TimerTask {
@@ -361,11 +392,19 @@ public class MainActivity extends AppCompatActivity
       complete = true;
       runOnUiThread(() -> {
         pauseGame();
-        Toast.makeText(MainActivity.this,R.string.game_over_toast,Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, R.string.game_over_toast, Toast.LENGTH_LONG).show();
         showStats();
       });
     }
 
+  }
+
+  private class ClockTimerTask extends TimerTask {
+
+    @Override
+    public void run() {
+      runOnUiThread(() -> updateClock());
+    }
   }
 
   private class FlingListener extends GestureDetector.SimpleOnGestureListener {
@@ -375,46 +414,54 @@ public class MainActivity extends AppCompatActivity
 
     private float originX;
     private float originY;
+    private int dragValue;
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-      valueDisplay.setTranslationX(e2.getX() - originX);
-      valueDisplay.setTranslationY(e2.getY() - originY);
-      return true;
+      boolean handled = false;
+      if (value == dragValue) {
+        valueDisplay.setTranslationX(e2.getX() - originX);
+        valueDisplay.setTranslationY(e2.getY() - originY);
+        handled = true;
+      }
+      return handled;
     }
+
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
       boolean handled = false;
-      int containerHeight = valueContainer.getHeight();
-      int containerWidth = valueContainer.getWidth();
-      int radiusX = containerWidth / RADIUS_FACTOR;
-      int radiusY = containerHeight / RADIUS_FACTOR;
-      double deltaX = e2.getX() - e1.getX();
-      double deltaY = e2.getY() - e1.getY();
-      double ellipticalDistance =
-          deltaX * deltaX / radiusX / radiusX + deltaY * deltaY / radiusY / radiusY;
-      double speed = Math.hypot(velocityX, velocityY);
-      if (speed >= SPEED_THRESHOLD && ellipticalDistance >= 1) {
-        stopValueTimer();
-        Category selection;
-        if (Math.abs(deltaY) * containerWidth <= Math.abs(deltaX) * containerHeight) {
-          if (deltaX > 0) {
-            selection = Category.BUZZ;
+      if (value == dragValue) {
+        int containerHeight = valueContainer.getHeight();
+        int containerWidth = valueContainer.getWidth();
+        int radiusX = containerWidth / RADIUS_FACTOR;
+        int radiusY = containerHeight / RADIUS_FACTOR;
+        double deltaX = e2.getX() - e1.getX();
+        double deltaY = e2.getY() - e1.getY();
+        double ellipticalDistance =
+            deltaX * deltaX / radiusX / radiusX + deltaY * deltaY / radiusY / radiusY;
+        double speed = Math.hypot(velocityX, velocityY);
+        if (speed >= SPEED_THRESHOLD && ellipticalDistance >= 1) {
+          stopValueTimer();
+          Category selection;
+          if (Math.abs(deltaY) * containerWidth <= Math.abs(deltaX) * containerHeight) {
+            if (deltaX > 0) {
+              selection = Category.BUZZ;
+            } else {
+              selection = Category.FIZZ;
+            }
           } else {
-            selection = Category.FIZZ;
+            if (deltaY > 0) {
+              selection = Category.NEITHER;
+            } else {
+              selection = Category.FIZZBUZZ;
+            }
           }
-        } else {
-          if (deltaY > 0) {
-            selection = Category.NEITHER;
-          } else {
-            selection = Category.FIZZBUZZ;
-          }
+          recordRound(selection);
+          updateValue();
+          startValueTimer();
+          handled = true;
         }
-        recordRound(selection);
-        updateValue();
-        startValueTimer();
-        handled = true;
       }
       return handled;
     }
@@ -425,6 +472,7 @@ public class MainActivity extends AppCompatActivity
       if (displayRect.contains(Math.round(evt.getX()), Math.round(evt.getY()))) {
         originX = evt.getX() - valueDisplay.getTranslationX();
         originY = evt.getY() - valueDisplay.getTranslationY();
+        dragValue = value;
         handled = true;
       }
       return handled;

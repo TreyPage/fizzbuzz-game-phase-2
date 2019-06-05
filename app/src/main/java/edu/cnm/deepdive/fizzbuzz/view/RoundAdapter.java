@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import edu.cnm.deepdive.fizzbuzz.R;
+import edu.cnm.deepdive.fizzbuzz.controller.MainActivity;
 import edu.cnm.deepdive.fizzbuzz.model.Round;
 import edu.cnm.deepdive.fizzbuzz.model.Round.Category;
 import java.util.List;
@@ -24,6 +25,7 @@ public class RoundAdapter extends ArrayAdapter<Round> {
   private Drawable incorrectDraw;
   private String correctDescript;
   private String incorrectDescript;
+  private String userSelect;
   private int correctColor;
   private int incorrectColor;
   private String[] categoryNames;
@@ -57,6 +59,7 @@ public class RoundAdapter extends ArrayAdapter<Round> {
     TextView valueDisplay = layout.findViewById(R.id.value_display);
     TextView categoryDisplay = layout.findViewById(R.id.category_display);
     ImageView resultDisplay = layout.findViewById(R.id.result_display);
+    TextView userSelectDisplay = layout.findViewById(R.id.user_selected);
     Round round = getItem(position);
     valueDisplay.setText(Integer.toString(round.getValue()));
     categoryDisplay.setText(categoryNames[round.getCategory().ordinal()]);
