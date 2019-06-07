@@ -11,9 +11,9 @@
     android:theme="@style/AppTheme">
 
     <activity
-      android:name=".controller.StatusActivity"
       android:label="@string/status"
       android:launchMode="singleTop"
+      android:name=".controller.StatusActivity"
       android:parentActivityName=".controller.MainActivity"
       />
 
@@ -25,8 +25,8 @@
       />
 
     <activity
-      android:name=".controller.MainActivity"
-      android:launchMode="singleTop">
+      android:launchMode="singleTop"
+      android:name=".controller.MainActivity">
 
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

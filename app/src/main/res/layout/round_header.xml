@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="horizontal"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:padding="@dimen/roll_item_padding"
+  android:orientation="horizontal"
   android:theme="@style/RoundHeader">
 
   <TextView
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:layout_gravity="center"
     android:text="@string/number_header"
-    android:layout_weight="1"
-    android:layout_gravity="center"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
     android:textAlignment="center"/>
 
   <TextView
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="2"
+    android:layout_gravity="center"
     android:text="@string/category_header"
-    android:layout_weight="2"
-    android:layout_gravity="center"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
     android:textAlignment="center"/>
 
   <TextView
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="2"
+    android:layout_gravity="center"
     android:text="@string/user_selection_header"
-    android:layout_weight="2"
-    android:layout_gravity="center"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
     android:textAlignment="center"/>
 
   <TextView
-    android:text="@string/result_header"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
     android:layout_weight="1"
     android:layout_gravity="center"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"/>
+    android:text="@string/result_header"/>
 
 </LinearLayout>

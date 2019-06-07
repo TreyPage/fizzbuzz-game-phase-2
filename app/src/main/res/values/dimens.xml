@@ -2,4 +2,5 @@
 <resources>
   <dimen name="roll_item_padding">8dp</dimen>
   <dimen name="indicator_size">120dp</dimen>
+  <dimen name="arrows">40dp</dimen>
 </resources>

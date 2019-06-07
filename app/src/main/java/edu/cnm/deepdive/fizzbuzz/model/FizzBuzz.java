@@ -11,9 +11,6 @@ package edu.cnm.deepdive.fizzbuzz.model;
  */
 public class FizzBuzz {
 
-  private FizzBuzz() {
-  }
-
   /**
    * {@link String} value indicating a number divisible by 3
    */
@@ -22,6 +19,8 @@ public class FizzBuzz {
    * {@link String} value indicating a number divisible by 5
    */
   public static final String BUZZ = "Buzz";
+  private FizzBuzz() {
+  }
 
   /**
    * Computes and returns "Fizz", "Buzz", or a {@link String} representation of
