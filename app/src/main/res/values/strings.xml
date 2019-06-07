@@ -30,7 +30,7 @@
   <string name="fizz">Fizz</string>
   <string name="buzz">Buzz</string>
   <string name="fizzbuzz">FizzBuzz</string>
-  <string name="neither"> </string>
+  <string name="neither">Neither</string>
 
   <string name="number_header">#</string>
   <string name="category_header">Category</string>
