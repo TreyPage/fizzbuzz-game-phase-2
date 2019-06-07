@@ -54,4 +54,6 @@
   <string name="left_text">Flick left for Fizz</string>
   <string name="down_text">Flick down for Neither</string>
   <string name="right_text">Flick right for Buzz</string>
+  <string name="total_shown">Total Shown:</string>
+  <string name="total_correct">Total Correct:</string>
 </resources>

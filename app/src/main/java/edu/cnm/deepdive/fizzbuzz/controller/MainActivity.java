@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
   @Override
   protected void onResume() {
     super.onResume();
-    // TODO Resume Game if running.
+
   }
 
   /**
@@ -153,6 +153,44 @@ public class MainActivity extends AppCompatActivity
     pause.setEnabled(running && !complete);
     pause.setVisible(running && !complete);
     return true;
+  }
+
+  public void hideItems() {
+    ImageView up = findViewById(R.id.up_arrow);
+    up.setVisibility(View.INVISIBLE);
+    ImageView down = findViewById(R.id.down_arrow);
+    down.setVisibility(View.INVISIBLE);
+    ImageView left = findViewById(R.id.left_arrow);
+    left.setVisibility(View.INVISIBLE);
+    ImageView right = findViewById(R.id.right_arrow);
+    right.setVisibility(View.INVISIBLE);
+    TextView upText = findViewById(R.id.up_text);
+    upText.setVisibility(View.INVISIBLE);
+    TextView downText = findViewById(R.id.neither_text);
+    downText.setVisibility(View.INVISIBLE);
+    TextView rightText = findViewById(R.id.right_text);
+    rightText.setVisibility(View.INVISIBLE);
+    TextView leftText = findViewById(R.id.left_text);
+    leftText.setVisibility(View.INVISIBLE);
+  }
+
+  public void showItems() {
+    ImageView up = findViewById(R.id.up_arrow);
+    up.setVisibility(View.VISIBLE);
+    ImageView down = findViewById(R.id.down_arrow);
+    down.setVisibility(View.VISIBLE);
+    ImageView left = findViewById(R.id.left_arrow);
+    left.setVisibility(View.VISIBLE);
+    ImageView right = findViewById(R.id.right_arrow);
+    right.setVisibility(View.VISIBLE);
+    TextView upText = findViewById(R.id.up_text);
+    upText.setVisibility(View.VISIBLE);
+    TextView downText = findViewById(R.id.neither_text);
+    downText.setVisibility(View.VISIBLE);
+    TextView rightText = findViewById(R.id.right_text);
+    rightText.setVisibility(View.VISIBLE);
+    TextView leftText = findViewById(R.id.left_text);
+    leftText.setVisibility(View.VISIBLE);
   }
 
   /**
@@ -258,6 +296,7 @@ public class MainActivity extends AppCompatActivity
     valueDisplay.setText("");
     // TODO Update any additional necessary fields.
     invalidateOptionsMenu();
+    showItems();
   }
 
   private void resumeGame() {
@@ -270,6 +309,7 @@ public class MainActivity extends AppCompatActivity
     startValueTimer();
     // TODO Update any additional necessary fields.
     invalidateOptionsMenu();
+    hideItems();
   }
 
   private void stopValueTimer() {
