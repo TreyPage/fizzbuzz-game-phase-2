@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity
   private String gameDataKey;
   private String gameTimeElapsedKey;
   private String clockFormat;
+  private int min;
+  private double sec;
+  private String valueString;
 
   /**
    * Initializes this activity when created, and when restored after {@link #onDestroy()} (for
@@ -232,6 +235,8 @@ public class MainActivity extends AppCompatActivity
   private void showStats() {
     Intent intent = new Intent(this, StatusActivity.class);
     intent.putExtra(getString(R.string.game_data_key), game);
+    intent.putExtra(getString(R.string.minutes_key), min);
+    intent.putExtra(getString(R.string.seconds_key), sec);
     startActivity(intent);
   }
 
@@ -362,24 +367,13 @@ public class MainActivity extends AppCompatActivity
 
   private void updateValue() {
     int valueLimit = (int) Math.pow(10, numDigits) - 1;
-    int containerHeight = valueContainer.getHeight();
-    int containerWidth = valueContainer.getWidth();
-    int textHeight;
-    int textWidth;
-    String valueString;
     value = 1 + rng.nextInt(valueLimit);
     valueString = Integer.toString(value);
     valueDisplay.setTranslationX(0);
     valueDisplay.setTranslationY(0);
     valueDisplay.setText(valueString);
     // HACK This assumes text is centered in layout.
-    valueDisplay.getPaint().getTextBounds(valueString, 0, valueString.length(), displayRect);
-    textHeight = displayRect.height();
-    textWidth = displayRect.width();
-    displayRect.top = (containerHeight - textHeight) / 2;
-    displayRect.bottom = (containerHeight + textHeight) / 2;
-    displayRect.left = (containerWidth - textWidth) / 2;
-    displayRect.right = (containerWidth + textWidth) / 2;
+
   }
 
   private void startValueTimer() {
@@ -401,8 +395,7 @@ public class MainActivity extends AppCompatActivity
     long remaining = (running || gameTimeElapsed > 0) ?
         gameDuration * 1000L - (System.currentTimeMillis() - gameTimerStart + gameTimeElapsed)
         : gameDuration * 1000L;
-    int min;
-    double sec;
+
     if (remaining > 0) {
       min = (int) remaining / 60000;
       sec = (remaining % 60000) / 1000.0;
@@ -509,6 +502,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onDown(MotionEvent evt) {
       boolean handled = false;
+      int containerHeight = valueContainer.getHeight();
+      int containerWidth = valueContainer.getWidth();
+      int textHeight;
+      int textWidth;
+      valueDisplay.getPaint().getTextBounds(valueString, 0, valueString.length(), displayRect);
+      textHeight = displayRect.height();
+      textWidth = displayRect.width();
+      displayRect.top = (containerHeight - textHeight) / 2;
+      displayRect.bottom = (containerHeight + textHeight) / 2;
+      displayRect.left = (containerWidth - textWidth) / 2;
+      displayRect.right = (containerWidth + textWidth) / 2;
       if (displayRect.contains(Math.round(evt.getX()), Math.round(evt.getY()))) {
         originX = evt.getX() - valueDisplay.getTranslationX();
         originY = evt.getY() - valueDisplay.getTranslationY();
