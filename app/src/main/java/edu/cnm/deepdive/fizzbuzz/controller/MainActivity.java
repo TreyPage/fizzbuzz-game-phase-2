@@ -299,7 +299,6 @@ public class MainActivity extends AppCompatActivity
     stopValueTimer();
     stopGameTimer();
     valueDisplay.setText("");
-    // TODO Update any additional necessary fields.
     invalidateOptionsMenu();
     showItems();
   }
@@ -312,7 +311,6 @@ public class MainActivity extends AppCompatActivity
     updateValue();
     startGameTimer();
     startValueTimer();
-    // TODO Update any additional necessary fields.
     invalidateOptionsMenu();
     hideItems();
   }
@@ -372,8 +370,6 @@ public class MainActivity extends AppCompatActivity
     valueDisplay.setTranslationX(0);
     valueDisplay.setTranslationY(0);
     valueDisplay.setText(valueString);
-    // HACK This assumes text is centered in layout.
-
   }
 
   private void startValueTimer() {
@@ -506,6 +502,9 @@ public class MainActivity extends AppCompatActivity
       int containerWidth = valueContainer.getWidth();
       int textHeight;
       int textWidth;
+
+      // HACK This assumes text is centered in layout.
+
       valueDisplay.getPaint().getTextBounds(valueString, 0, valueString.length(), displayRect);
       textHeight = displayRect.height();
       textWidth = displayRect.width();

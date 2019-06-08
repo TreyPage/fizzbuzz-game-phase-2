@@ -14,7 +14,7 @@
       android:max="@integer/time_limit_max"
       android:summary="@string/time_limit_summary"
       android:title="@string/time_limit_title"
-      android:drawable="@drawable/timer"
+      android:icon="@drawable/timer"
       />
 
     <androidx.preference.SeekBarPreference
