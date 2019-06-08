@@ -3,4 +3,5 @@
   <dimen name="roll_item_padding">8dp</dimen>
   <dimen name="indicator_size">120dp</dimen>
   <dimen name="arrows">40dp</dimen>
+  <dimen name="fab_margin">16dp</dimen>
 </resources>

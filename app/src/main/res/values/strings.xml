@@ -58,4 +58,7 @@
   <string name="right_text">Flick right for Buzz</string>
   <string name="total_shown">Total Shown:</string>
   <string name="total_correct">Total Correct:</string>
+  <string name="title_activity_splash_screen">splash_screen</string>
+  <string name="how_to_splash">How To Play</string>
+  <string name="how_to_play">FizzBuzz is a math game based on multiples of 3, 5, or both. If the number shown is a multiple of 3 (ex. 9) swipe left. If the number shown is a multiple of 5 (ex. 20) swipe right. If the number shown is a multiple of 3 and 5 (ex. 15) swipe swipe up. If it isn\'t a multiple of either swipe down.</string>
 </resources>

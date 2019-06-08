@@ -9,31 +9,31 @@
     android:roundIcon="@mipmap/fizzbuzz_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-
     <activity
-      android:label="@string/status"
-      android:launchMode="singleTop"
-      android:name=".controller.StatusActivity"
-      android:parentActivityName=".controller.MainActivity"
-      />
-
-    <activity
-      android:label="Settings"
-      android:launchMode="singleTop"
-      android:name=".controller.SettingsActivity"
-      android:parentActivityName=".controller.MainActivity"
-      />
-
-    <activity
-      android:launchMode="singleTop"
-      android:name=".controller.MainActivity"
-      android:configChanges="orientation|fontScale">
-
+      android:label="@string/app_name"
+      android:name=".view.splash_screen"
+      android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
+    </activity>
+    <activity
+      android:label="@string/status"
+      android:launchMode="singleTop"
+      android:name=".controller.StatusActivity"
+      android:parentActivityName=".controller.MainActivity"/>
+    <activity
+      android:label="Settings"
+      android:launchMode="singleTop"
+      android:name=".controller.SettingsActivity"
+      android:parentActivityName=".controller.MainActivity"/>
+    <activity
+      android:configChanges="orientation|fontScale"
+      android:launchMode="singleTop"
+      android:name=".controller.MainActivity">
+
     </activity>
   </application>
 

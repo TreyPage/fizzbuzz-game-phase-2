@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:id="@+id/splash_activity"
+  tools:context=".controller.MainActivity">
+
+  <TextView
+    android:id="@+id/fizz_buzz_splash"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="80dp"
+    android:fontFamily="cursive"
+    android:text="@string/fizzbuzz"
+    android:textAlignment="center"
+    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    android:textSize="50sp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent"/>
+
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/splash_play"
+    style="@style/AppTheme.NoActionBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="40dp"
+    android:paddingTop="40dp"
+    app:layout_constraintBottom_toTopOf="@id/splash_settings"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/fizz_buzz_splash"
+    app:layout_constraintVertical_chainStyle="spread"
+    app:srcCompat="@drawable/play"/>
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/splash_settings"
+    style="@style/AppTheme.NoActionBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toTopOf="@+id/splash_how_to"
+    app:layout_constraintStart_toStartOf="@+id/splash_play"
+    app:layout_constraintTop_toBottomOf="@+id/splash_play"
+    app:srcCompat="@drawable/settings"
+    />
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/splash_how_to"
+    style="@style/AppTheme.NoActionBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="@+id/splash_settings"
+    app:layout_constraintTop_toBottomOf="@+id/splash_settings"
+    app:srcCompat="@drawable/help"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

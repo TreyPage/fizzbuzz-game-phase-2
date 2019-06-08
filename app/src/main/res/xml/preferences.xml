@@ -5,14 +5,17 @@
   <!-- TODO add icons -->
 
   <androidx.preference.PreferenceCategory
-    android:title="@string/difficulty_title">
+    android:title="@string/difficulty_title"
+    >
 
     <androidx.preference.SeekBarPreference
       android:defaultValue="@integer/time_limit_default"
       android:key="@string/time_limit_key"
       android:max="@integer/time_limit_max"
       android:summary="@string/time_limit_summary"
-      android:title="@string/time_limit_title"/>
+      android:title="@string/time_limit_title"
+      android:drawable="@drawable/timer"
+      />
 
     <androidx.preference.SeekBarPreference
       android:defaultValue="@integer/num_digits_default"

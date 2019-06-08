@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
       updateClock();
     }
     if (game == null) {
-      initgame();
+      resumeGame();
     }
   }
 
