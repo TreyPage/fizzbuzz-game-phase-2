@@ -1,5 +1,7 @@
 package edu.cnm.deepdive.fizzbuzz.controller;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
@@ -62,7 +64,5 @@ public class SettingsActivity extends AppCompatActivity {
         return false;
       });
     }
-
   }
-
 }

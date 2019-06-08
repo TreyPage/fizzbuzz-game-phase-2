@@ -22,6 +22,7 @@ import edu.cnm.deepdive.fizzbuzz.R;
 import edu.cnm.deepdive.fizzbuzz.model.Game;
 import edu.cnm.deepdive.fizzbuzz.model.Round;
 import edu.cnm.deepdive.fizzbuzz.model.Round.Category;
+import edu.cnm.deepdive.fizzbuzz.view.SplashScreen;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -219,8 +220,9 @@ public class MainActivity extends AppCompatActivity
         break;
       case R.id.replay:
         initgame();
-        Toast.makeText(this, R.string.toast_string, Toast.LENGTH_LONG).show();
+        intent = new Intent(this, SplashScreen.class);
         pauseGame();
+        startActivity(intent);
         break;
       case R.id.status:
         showStats();

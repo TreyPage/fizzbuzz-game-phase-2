@@ -10,7 +10,7 @@
 
   <style name="RoundItem" parent="AppTheme">
     <item name="android:textSize">20sp</item>
-    <item name="android:textColor">@color/darkText</item>
+    <item name="android:textColor">@color/lightText</item>
     <item name="android:textAlignment">center</item>
   </style>
 

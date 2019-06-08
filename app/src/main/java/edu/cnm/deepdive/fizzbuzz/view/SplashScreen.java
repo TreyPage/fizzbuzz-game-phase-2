@@ -3,6 +3,7 @@ package edu.cnm.deepdive.fizzbuzz.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -10,7 +11,7 @@ import edu.cnm.deepdive.fizzbuzz.R;
 import edu.cnm.deepdive.fizzbuzz.controller.MainActivity;
 import edu.cnm.deepdive.fizzbuzz.controller.SettingsActivity;
 
-public class splash_screen extends AppCompatActivity {
+public class SplashScreen extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

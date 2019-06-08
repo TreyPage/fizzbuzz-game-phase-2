@@ -10,15 +10,16 @@
 
     <androidx.preference.SeekBarPreference
       android:defaultValue="@integer/time_limit_default"
+      android:icon="@drawable/timer_settings"
       android:key="@string/time_limit_key"
       android:max="@integer/time_limit_max"
       android:summary="@string/time_limit_summary"
       android:title="@string/time_limit_title"
-      android:icon="@drawable/timer"
       />
 
     <androidx.preference.SeekBarPreference
       android:defaultValue="@integer/num_digits_default"
+      android:icon="@drawable/number_settings"
       android:key="@string/num_digits_key"
       android:max="@integer/num_digits_max"
       android:summary="@string/num_digits_summary"
@@ -27,10 +28,12 @@
   </androidx.preference.PreferenceCategory>
 
   <androidx.preference.PreferenceCategory
-    android:title="@string/general_title">
+    android:title="@string/general_title"
+    >
 
     <androidx.preference.SeekBarPreference
       android:defaultValue="@integer/game_time_default"
+      android:icon="@drawable/game_time_settings"
       android:key="@string/game_time_key"
       android:max="@integer/game_time_max"
       android:summary="@string/game_time_summary"

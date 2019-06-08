@@ -3,8 +3,8 @@
   <color name="colorPrimary">#D81B60</color>
   <color name="colorPrimaryDark">#D81B90</color>
   <color name="colorAccent">#D81B60</color>
-  <color name="correct">#5CC95C</color>
-  <color name="incorrect">#D53737</color>
+  <color name="correct">#D81B90</color>
+  <color name="incorrect">#FF000000</color>
   <color name="darkText">#FF000000</color>
   <color name="lightText">#FFFFFFFF</color>
 </resources>
